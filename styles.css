@@ -1,0 +1,79 @@
+:root {
+  color-scheme: light dark;
+  font-family: Inter, system-ui, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: #101418;
+  color: #f4f7fb;
+}
+
+.app {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  align-items: end;
+  margin: 20px 0;
+}
+
+label {
+  display: grid;
+  gap: 8px;
+  font-size: 0.9rem;
+}
+
+select,
+button {
+  min-height: 40px;
+  border-radius: 8px;
+  border: 1px solid #2f3b47;
+  padding: 8px;
+  background: #151b22;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.stream {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #2f3b47;
+}
+
+.video-placeholder {
+  min-height: 300px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(130deg, #212d3f, #3e2c57);
+  font-size: 1.1rem;
+}
+
+.caption-overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.75);
+  font-size: 0.95rem;
+}
+
+.caption-overlay p {
+  margin: 4px 0;
+}
+
+.status {
+  margin-top: 12px;
+  color: #7fd8ff;
+}

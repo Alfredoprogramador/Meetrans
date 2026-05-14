@@ -8,6 +8,12 @@ const statusMessage = document.getElementById('statusMessage');
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 let recognition;
 let isRunning = false;
+const speechLocales = {
+  pt: 'pt-BR',
+  en: 'en-US',
+  es: 'es-ES',
+  fr: 'fr-FR',
+};
 
 const setStatus = (message) => {
   statusMessage.textContent = message;
@@ -27,18 +33,23 @@ const translateText = async (text) => {
     return text;
   }
 
-  const response = await fetch('https://libretranslate.com/translate', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      q: text,
-      source: sourceLanguage.value,
-      target: targetLanguage.value,
-      format: 'text',
-    }),
-  });
+  let response;
+  try {
+    response = await fetch('https://libretranslate.com/translate', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        q: text,
+        source: sourceLanguage.value,
+        target: targetLanguage.value,
+        format: 'text',
+      }),
+    });
+  } catch (error) {
+    throw new Error('Erro de conexão com o serviço de tradução.');
+  }
 
   if (!response.ok) {
     throw new Error('Falha ao traduzir.');
@@ -90,8 +101,14 @@ const startRecognition = () => {
       }
     };
 
-    recognition.onerror = () => {
-      setStatus('Não foi possível continuar a captação de áudio.');
+    recognition.onerror = (event) => {
+      if (event.error === 'not-allowed') {
+        setStatus('Permissão de microfone negada.');
+      } else if (event.error === 'no-speech') {
+        setStatus('Nenhuma fala detectada. Tente falar novamente.');
+      } else {
+        setStatus('Não foi possível continuar a captação de áudio.');
+      }
       stopRecognition();
     };
 
@@ -102,7 +119,7 @@ const startRecognition = () => {
     };
   }
 
-  recognition.lang = sourceLanguage.value;
+  recognition.lang = speechLocales[sourceLanguage.value] || 'pt-BR';
   isRunning = true;
   recognition.start();
   toggleButton.textContent = 'Parar tradução ao vivo';

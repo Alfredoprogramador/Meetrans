@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Meetrans - Tradução ao vivo</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header>
+        <h1>Meetrans</h1>
+        <p>Tradução em vivo para transmissões de vídeo conferência.</p>
+      </header>
+
+      <section class="controls" aria-label="Controles de tradução">
+        <label>
+          Idioma de origem
+          <select id="sourceLanguage">
+            <option value="pt">Português</option>
+            <option value="en">Inglês</option>
+            <option value="es">Espanhol</option>
+            <option value="fr">Francês</option>
+          </select>
+        </label>
+
+        <label>
+          Idioma de destino
+          <select id="targetLanguage">
+            <option value="en">Inglês</option>
+            <option value="pt">Português</option>
+            <option value="es">Espanhol</option>
+            <option value="fr">Francês</option>
+          </select>
+        </label>
+
+        <button id="toggleButton" type="button">Iniciar tradução ao vivo</button>
+      </section>
+
+      <section class="stream" aria-label="Transmissão simulada">
+        <div class="video-placeholder">Área da transmissão de vídeo conferência</div>
+        <div class="caption-overlay" aria-live="polite">
+          <p><strong>Original:</strong> <span id="originalCaption">Aguardando áudio...</span></p>
+          <p><strong>Traduzido:</strong> <span id="translatedCaption">Aguardando tradução...</span></p>
+        </div>
+      </section>
+
+      <p id="statusMessage" class="status" role="status"></p>
+    </main>
+
+    <script src="./app.js" defer></script>
+  </body>
+</html>
